@@ -25,6 +25,7 @@ var app = app || {};
     /* OLD forEach():
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
     */
+    Article.all = rawData.map(articleObject => new Article(articleObject));
 
   };
 
@@ -37,11 +38,22 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map().reduce()
+    return Article.all.map(obj => {
+      return obj.body.split(' ').length;
+    }).reduce((acc, curr) => {
+      return acc + curr;
+    }, 0);
   };
 
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(obj => {
+      return obj.author;
+    }).reduce((acc, curr) => {
+      if(!acc.includes(curr)){
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
   };
 
   Article.numWordsByAuthor = () => {
@@ -92,5 +104,5 @@ var app = app || {};
       .then(console.log)
       .then(callback);
   };
+  module.Article = Article;
 }(app));
-

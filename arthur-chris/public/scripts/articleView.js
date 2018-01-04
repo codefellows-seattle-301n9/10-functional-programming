@@ -3,6 +3,7 @@ var app = app || {};
 
 (function(module){
   var articleView = {};
+  module.articleView = articleView;
 
   articleView.populateFilters = () => {
     $('article').each(function() {
