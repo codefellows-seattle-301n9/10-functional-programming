@@ -38,11 +38,14 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map().reduce()
+    return Article.all.map((ele) => ele.body.split(' ').length).reduce((acc, cur) => acc + cur);
   };
 
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map((ele) => ele.author).reduce((acc, cur) => {
+      if (!acc.includes(cur)) acc.push(cur);
+      return acc;
+    }, []);
   };
 
   Article.numWordsByAuthor = () => {
