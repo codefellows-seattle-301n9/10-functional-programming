@@ -38,7 +38,7 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map(obj => {
+    return app.Article.all.map(obj => {
       return obj.body.split(' ').length;
     }).reduce((acc, curr) => {
       return acc + curr;
@@ -46,7 +46,7 @@ var app = app || {};
   };
 
   Article.allAuthors = () => {
-    return Article.all.map(obj => {
+    return app.Article.all.map(obj => {
       return obj.author;
     }).reduce((acc, curr) => {
       if(!acc.includes(curr)){
@@ -57,7 +57,16 @@ var app = app || {};
   };
 
   Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(author => {})
+    return app.Article.allAuthors().map(author => {
+      let obj = {};
+      obj.name = author;
+      obj.wordCount = app.Article.all.filter(article => 
+        article.author === obj.name)
+        .reduce((acc, curr) => {
+          return acc + curr.body.split(' ').length;
+        }, 0);
+      return obj;
+    });
   };
 
   Article.truncateTable = callback => {
