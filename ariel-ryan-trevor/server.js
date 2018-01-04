@@ -7,7 +7,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const conString = '';
+
+//consString for Trevor
+const conString = 'postgres://trevorjdobson:1234@localhost:5432/kilovolt';
+
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => {

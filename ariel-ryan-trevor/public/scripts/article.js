@@ -25,6 +25,7 @@ var app = app || {};
     /* OLD forEach():
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
     */
+    Article.all = rawData.map(articleObj => new Article(articleObj));
 
   };
 
@@ -91,4 +92,5 @@ var app = app || {};
       .then(console.log)
       .then(callback);
   };
+  module.Article = Article;
 })(app);
