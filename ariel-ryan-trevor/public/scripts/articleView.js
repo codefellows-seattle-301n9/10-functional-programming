@@ -1,9 +1,9 @@
 'use strict';
 var app = app || {};
 
-var articleView = {};
-
 (function (module) {
+  var articleView = {};
+
   articleView.populateFilters = () => {
     $('article').each(function () {
       if (!$(this).hasClass('template')) {
@@ -139,4 +139,5 @@ var articleView = {};
     $('#blog-stats .articles').text(app.Article.all.length);
     $('#blog-stats .words').text(app.Article.numWordsAll());
   };
+  module.articleView = articleView;
 })(app);
