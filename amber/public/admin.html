@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles/modules.css">
     <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
 
-    <script id="author-stats" type="text/x-handlebars-template">
+    <script id="stat" type="text/x-handlebars-template">
         <p>{{author}} total words: {{author-words}}</p>
     </script>
 
@@ -53,7 +53,7 @@
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
     <script>
-      Article.fetchAll();
+      Article.fetchAll(articleView.initAdminPage());
     </script>
   </body>
 </html>
