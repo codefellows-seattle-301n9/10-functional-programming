@@ -2,14 +2,14 @@
 var app = app || {};
 
 (function(module) {
-  module.exports = function Article(rawDataObj) {
+  function Article(rawDataObj) {
     // REVIEWED: In Lab 8, we explored a lot of new functionality going on here. Let's re-examine the concept of context. Normally, "this" inside of a constructor function refers to the newly instantiated object. However, in the function we're passing to forEach, "this" would normally refer to "undefined" in strict mode. As a result, we had to pass a second argument to forEach to make sure our "this" was still referring to our instantiated object. One of the primary purposes of lexical arrow functions, besides cleaning up syntax to use fewer lines of code, is to also preserve context. That means that when you declare a function using lexical arrows, "this" inside the function will still be the same "this" as it was outside the function. As a result, we no longer have to pass in the optional "this" argument to forEach!
     Object.keys(rawDataObj).forEach(key => this[key] = rawDataObj[key]);
   }
 
-  module.exports.Article.all = [];
+  Article.all = [];
 
-  module.exports.Article.prototype.toHtml = function () {
+  Article.prototype.toHtml = function () {
     var template = Handlebars.compile($('#article-template').text());
 
     this.daysAgo = parseInt((new Date() - new Date(this.publishedOn)) / 60 / 60 / 24 / 1000);
@@ -19,10 +19,10 @@ var app = app || {};
     return template(this);
   };
 
-  module.exports.Article.loadAll = rawData => {
+  Article.loadAll = rawData => {
     rawData.sort((a, b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
-    module.exports.Article.all = rawData.map(articleObject => new module.exports.Article(articleObject));
+    Article.all = rawData.map(articleObject => new Article(articleObject));
 
     /* OLD forEach():
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
@@ -30,7 +30,7 @@ var app = app || {};
 
   };
 
-  module.exports.Article.fetchAll = callback => {
+  Article.fetchAll = callback => {
     $.get('/articles')
       .then(results => {
         Article.loadAll(results);
@@ -38,29 +38,31 @@ var app = app || {};
       })
   };
 
-  module.exports.Article.numWordsAll = () => {
-    return module.exports.Article.all.map(x => {
-      return x.body.length;
-    }).reduce(
-      function (total, num) {
-        return total + num;
-      });
-  };
-
-  module.exports.Article.allAuthors = () => {
-    return module.exports.Article.all.map(x => {
-      return x.author;
-    }).filter((elem, index, array) => {
-      return array.indexOf(elem) === index;
+  Article.numWordsAll = () => {
+    return Article.all.map(article => {
+      return article.body.split(' ').length;
+    }).reduce((acc, cur) => {
+      acc + cur;
     });
   };
 
-  module.exports.Article.numWordsByAuthor = () => {
-    let allAuthors = module.exports.Article.allAuthors();
+  Article.allAuthors = () => {
+    return Article.all.map(obj => {
+      return obj.author;
+    }).reduce((acc, curr) => {
+      if (!acc.includes(curr)) {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+  };
+
+  Article.numWordsByAuthor = () => {
+    let allAuthors = Article.allAuthors();
     return allAuthors.map(author => {
       return ({
         author: author,
-        words: module.exports.Article.all.filter(article => {
+        words: Article.all.filter(article => {
           return article.author === author;
         }).map(article => {
           return article.body.length;
@@ -71,7 +73,7 @@ var app = app || {};
     })
   };
 
-  module.exports.Article.truncateTable = callback => {
+  Article.truncateTable = callback => {
     $.ajax({
       url: '/articles',
       method: 'DELETE',
@@ -81,14 +83,14 @@ var app = app || {};
       .then(callback);
   };
 
-  module.exports.Article.prototype.insertRecord = function (callback) {
+  Article.prototype.insertRecord = function (callback) {
     // REVIEWED: Why can't we use an arrow function here for .insertRecord()?
     $.post('/articles', { author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title })
       .then(console.log)
       .then(callback);
   };
 
-  module.exports.Article.prototype.deleteRecord = function (callback) {
+  Article.prototype.deleteRecord = function (callback) {
     $.ajax({
       url: `/articles/${this.article_id}`,
       method: 'DELETE'
@@ -97,7 +99,7 @@ var app = app || {};
       .then(callback);
   };
 
-  module.exports.Article.prototype.updateRecord = function (callback) {
+  Article.prototype.updateRecord = function (callback) {
     $.ajax({
       url: `/articles/${this.article_id}`,
       method: 'PUT',
@@ -114,5 +116,5 @@ var app = app || {};
       .then(console.log)
       .then(callback);
   };
-
+  module.Article = Article;
 })(app);
