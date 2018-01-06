@@ -18,6 +18,8 @@ var app = app || {};
     this.body = marked(this.body);
     return template(this);
   };
+  
+ 
 
   // Article.prototype.toHtml = function () {
   //   var template = Handlebars.compile($('#article-template').text());

@@ -10,18 +10,14 @@
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
     <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
-  <!-- TODO TEMP -->
-  <script id="article-template" type="text/x-handlebars-template">
-    <section id="blog-stats">
-      <dt class="articles">Total articles:{{articles}}</dt> <dd class="articles"></dd>
-      <dt class="words">Total words: {{{words}}} </dt> <dd class="words"></dd>
-      <h2>Author Stats</h2>
-      <p><em>Details on who is writing, and how much writing they are doing...</em></p>
-      <ul class="author-stats">
-        <li><b>{{authorName}}</b>: {{numWordsPerAuthor}} words written </li>
-      </ul>
-    </section>
-  </script>
+
+
+    <script id="author-stats" type="text/x-handlebars-template"></script>
+    <script id="author-template-stats" type="text/x-handlebars-template">
+      <li> <strong>{{name}} </strong>: {{numWords}} words written.
+      </li>
+    </script>
+
   </head>
   <body>
     <header class="site-header clearfix">
@@ -40,7 +36,6 @@
         </ul>
       </nav>
     </header>
-    
     <main class="clearfix">
       <h1>Blog Stats</h1>
       <section id="blog-stats">
@@ -61,7 +56,7 @@
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
     <script>
-      app.Article.fetchAll(app.articleView.initadmin);
+      app.Article.fetchAll(app.articleView.initAdminPage);
     </script>
   </body>
 </html>
