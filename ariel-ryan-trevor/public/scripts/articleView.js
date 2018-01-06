@@ -131,9 +131,12 @@ var app = app || {};
   };
 
   articleView.initAdminPage = () => {
+    let $source = $("#authorStats-temmplate").text();
+    let template = Handlebars.compile($source);
 
     // REVIEWED: We use .forEach() here because we are relying on the side-effects of the callback function: appending to the DOM. The callback is not required to return anything.
     app.Article.numWordsByAuthor().forEach(stat => $('.author-stats').append(template(stat)));
+
 
     // REVIEWED: Simply write the correct values to the page:
     $('#blog-stats .articles').text(app.Article.all.length);
