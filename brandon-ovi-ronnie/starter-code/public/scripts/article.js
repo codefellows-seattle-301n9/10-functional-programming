@@ -1,6 +1,8 @@
 'use strict';
 var app = app || {};
 
+(function(module) {
+
 function Article(rawDataObj) {
   // REVIEW: In Lab 8, we explored a lot of new functionality going on here. Let's re-examine the concept of context. Normally, "this" inside of a constructor function refers to the newly instantiated object. However, in the function we're passing to forEach, "this" would normally refer to "undefined" in strict mode. As a result, we had to pass a second argument to forEach to make sure our "this" was still referring to our instantiated object. One of the primary purposes of lexical arrow functions, besides cleaning up syntax to use fewer lines of code, is to also preserve context. That means that when you declare a function using lexical arrows, "this" inside the function will still be the same "this" as it was outside the function. As a result, we no longer have to pass in the optional "this" argument to forEach!
   Object.keys(rawDataObj).forEach(key => this[key] = rawDataObj[key]);
@@ -21,10 +23,10 @@ Article.prototype.toHtml = function() {
 Article.loadAll = rawData => {
   rawData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
+  Article.all = rawData.map(i => new Article(i));
   /* OLD forEach():
   rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
   */
-
 };
 
 Article.fetchAll = callback => {
@@ -36,15 +38,30 @@ Article.fetchAll = callback => {
 };
 
 Article.numWordsAll = () => {
-  return Article.all.map().reduce()
+  return Article.all.map(x => x.body.split(' ').length).reduce((arr, cur) => arr + cur);
 };
 
 Article.allAuthors = () => {
-  return Article.all.map().reduce();
+  return Article.all.map(x => x.author).reduce((acc, cur) => { 
+    if (!acc.includes(cur)) {
+      acc.push(cur)
+    } return acc;
+  }, []);
 };
 
 Article.numWordsByAuthor = () => {
-  return Article.allAuthors().map(author => {})
+  // total articles (objects) by author
+  // return Article.allAuthors().map(author => app.Article.all.filter(article => {if (article.author == author) return article;}))
+
+  // total words by each author
+  return Article.allAuthors().map(author => 
+    (app.Article.all.filter(article => {
+    if (article.author == author) 
+    return article;
+  }).map(article => 
+    article.body.split(' ').length).reduce((arr, cur) =>
+     arr + cur))
+  );
 };
 
 Article.truncateTable = callback => {
@@ -90,3 +107,7 @@ Article.prototype.updateRecord = function(callback) {
     .then(console.log)
     .then(callback);
 };
+
+  module.Article = Article;
+
+}) (app);
