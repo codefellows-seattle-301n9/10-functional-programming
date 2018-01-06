@@ -28,6 +28,7 @@ app.get('/articles', (request, response) => {
   )
   .then(result => response.send(result.rows))
   .catch(console.error);
+  console.log('query sent',response);
 });
 
 app.post('/articles', (request, response) => {
