@@ -53,8 +53,19 @@ var app = app || {};
   };
 
   Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(author => { })
+    return Article.allAuthors().map(author => {
+      return {
+        name: author,
+        numWords: Article.all.filter(article => article.author === author)
+          .map(authorArticles => authorArticles.body.split(' ').length)
+          .reduce((acc, curr) => acc + curr)
+
+      }
+
+    })
   };
+
+
 
   Article.truncateTable = callback => {
     $.ajax({
