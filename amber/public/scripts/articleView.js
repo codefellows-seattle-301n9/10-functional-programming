@@ -120,6 +120,7 @@ var app = app || {};
   }
 
   articleView.initIndexPage = () => {
+    console.log('article all ' + app.Article.all);
     app.Article.all.forEach(a => $('#articles').append(a.toHtml()));
 
     articleView.populateFilters();
@@ -137,8 +138,8 @@ var app = app || {};
     app.Article.numWordsByAuthor().forEach(stat => $('.author-stats').append(statTemplateRender(stat)));
 
     // REVIEWED: Simply write the correct values to the page:
-    $('#blog-stats .articles').text(app.Article.all.length);
-    $('#blog-stats .words').text(app.Article.numWordsAll());
+    $('#blog-stats .articles').html(app.Article.all.length);
+    $('#blog-stats .words').html(app.Article.numWordsAll());
   };
-  module.articleView = articleView;
+  return module.articleView = articleView;
 })(app);
