@@ -17,7 +17,6 @@ var app = app || {};
 
     return template(this);
   };
-
   Article.loadAll = rawData => {
     rawData.sort((a, b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
     Article.all = rawData.map( x => new Article(x));
@@ -53,7 +52,8 @@ var app = app || {};
 
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => { 
-
+      let authArticles = Article.all.filter((article)=> author === article.author);
+      return {author:author,wordCount:authArticles.map(matchedAuthor => matchedAuthor.body.split(' ').length).reduce((acc, cur) => acc + cur)}
     })
   };
 
