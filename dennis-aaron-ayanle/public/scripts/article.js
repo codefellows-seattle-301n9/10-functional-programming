@@ -24,6 +24,7 @@ var app = app || {};
     /* OLD forEach():
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
     */
+    Article.all = rawData.map(sumVariable => new Article(sumVariable));
 
   };
 
@@ -36,15 +37,24 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map(x => x.body.split(' ').length).reduce((acc, cur) => acc + cur)
+    return Article.all.map(article => article.body.split(' ').length).reduce((acc, cur) => acc + cur)
   };
 
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(object => {
+      return object.author;
+    }).reduce((acc, curr) => {
+      if (!acc.includes(curr)) {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
   };
 
   Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(author => { })
+    return Article.allAuthors().map(author => { 
+
+    })
   };
 
   Article.truncateTable = callback => {
