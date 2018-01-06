@@ -120,7 +120,6 @@ var app = app || {};
   }
 
   articleView.initIndexPage = () => {
-    console.log('article all ' + app.Article.all);
     app.Article.all.forEach(a => $('#articles').append(a.toHtml()));
 
     articleView.populateFilters();
