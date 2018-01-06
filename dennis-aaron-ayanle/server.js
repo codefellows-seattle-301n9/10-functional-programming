@@ -7,7 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const conString = '';
+const conString = 'postgres://postgres:tabinLync@localhost:5432/cf301js';
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => {
