@@ -22,9 +22,7 @@ var app = app || {};
   Article.loadAll = rawData => {
     rawData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
-    /* OLD forEach():
-    rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
-    */
+    Article.all = rawData.map(articleObject => new Article(articleObject));
 
   };
 
@@ -37,15 +35,35 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map().reduce()
+    return app.Article.all.map(obj => {
+      return obj.body.split(' ').length;
+    }).reduce((acc, curr) => {
+      return acc + curr;
+    }, 0);
   };
 
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return app.Article.all.map(obj => {
+      return obj.author;
+    }).reduce((acc, curr) => {
+      if(!acc.includes(curr)){
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
   };
 
   Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(author => {})
+    return app.Article.allAuthors().map(author => {
+      let obj = {};
+      obj.name = author;
+      obj.wordCount = app.Article.all.filter(article => 
+        article.author === obj.name)
+        .reduce((acc, curr) => {
+          return acc + curr.body.split(' ').length;
+        }, 0);
+      return obj;
+    });
   };
 
   Article.truncateTable = callback => {
@@ -54,12 +72,12 @@ var app = app || {};
       method: 'DELETE',
     })
       .then(console.log)
-    // REVIEW: Check out this clean syntax for just passing 'assumed' data into a named function! The reason we can do this has to do with the way Promise.prototype.then() works. It's a little outside the scope of 301 material, but feel free to research!
+    // REVIEWED: Check out this clean syntax for just passing 'assumed' data into a named function! The reason we can do this has to do with the way Promise.prototype.then() works. It's a little outside the scope of 301 material, but feel free to research!
       .then(callback);
   };
 
   Article.prototype.insertRecord = function(callback) {
-    // REVIEW: Why can't we use an arrow function here for .insertRecord()?
+    // REVIEWED: Why can't we use an arrow function here for .insertRecord()?
     // because the function has "this"
     $.post('/articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
       .then(console.log)
@@ -92,5 +110,5 @@ var app = app || {};
       .then(console.log)
       .then(callback);
   };
+  module.Article = Article;
 }(app));
-
