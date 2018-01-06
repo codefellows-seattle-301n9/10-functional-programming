@@ -62,6 +62,7 @@ var app = app || {};
         .reduce((acc, curr) => {
           return acc + curr.body.split(' ').length;
         }, 0);
+      obj.articleCount = app.Article.all.filter(article => article.author === obj.name).length; // additional author stat
       return obj;
     });
   };
