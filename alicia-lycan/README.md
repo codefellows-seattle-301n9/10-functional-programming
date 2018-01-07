@@ -1,21 +1,23 @@
-# Project Name
+# Functional Programming
 
-**Author**: Your Name Goes Here
-**Version**: 1.0.0 (increment the patch/fix version number up if you make more commits past your first submission)
+**Author**: Alicia Lycan
+**Version**: 1.0.2
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for a Code Fellows 301 class. (i.e. What's your problem domain?) -->
+This application utilizes IFFEs and functional programming to access data from PSQL database based on specific criteria.
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+1. Clone repo to local computer
+2. Copy and rename directory in repo
+3. Run npm install
+4. Run node server.js
+5. Visit browser on localhost:3000
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+This application uses MVC architecture, JavaScript, jQuery, PostgressSQL, NPM, Nodejs, Handlebars, AJAX, HTML, and CSS.
 
 ## Change Log
-<!-- Use this are to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with GET and POST routes for the book resource.
+01-03-2018 10:30pm - Public page is displaying data from sql database.
 
-## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+01-04-2018 9:30pm - MVP accomplished! Application now has a fully-functional express server, with GET and POST routes for articles resource.
