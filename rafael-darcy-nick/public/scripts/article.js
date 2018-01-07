@@ -21,12 +21,11 @@ var app = app || {};
 
   Article.loadAll = rawData => {
     rawData.sort((a, b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
-    
-    Article.all = rawData.map(x => new Article(x));
+
     /* OLD forEach():
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
     */
-
+    Article.all = rawData.map(x => new Article(x));
   };
 
   Article.fetchAll = callback => {
@@ -38,11 +37,18 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map(x => x.body.split(' ').length).reduce((acc, cur) => acc + cur);
+    return Article.all.map(art => art.body.split(' ').length).reduce((acc, cur) => acc + cur);
   };
 
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(obj => {
+      return obj.author;
+    }).reduce((acc, cur) => {
+      if (!acc.includes(cur)) {
+        acc.push(cur);
+      }
+      return acc;
+    }, []);
   };
 
   Article.numWordsByAuthor = () => {
