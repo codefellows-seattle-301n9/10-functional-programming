@@ -24,9 +24,6 @@ Article.loadAll = rawData => {
   rawData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
   Article.all = rawData.map(i => new Article(i));
-  /* OLD forEach():
-  rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
-  */
 };
 
 Article.fetchAll = callback => {
@@ -50,18 +47,19 @@ Article.allAuthors = () => {
 };
 
 Article.numWordsByAuthor = () => {
-  // total articles (objects) by author
-  // return Article.allAuthors().map(author => app.Article.all.filter(article => {if (article.author == author) return article;}))
-
-  // total words by each author
-  return Article.allAuthors().map(author => 
-    (app.Article.all.filter(article => {
-    if (article.author == author) 
-    return article;
-  }).map(article => 
-    article.body.split(' ').length).reduce((arr, cur) =>
-     arr + cur))
-  );
+  return app.Article.allAuthors().map(author => {
+    return {
+      name : author,
+      numWords : app.Article.all.filter(article => {
+        if (article.author == author) {
+          return article;
+        }
+      }).map(article => 
+        article.body.split(' ').length)
+        .reduce((arr, cur) =>
+         arr + cur)
+    }
+  });
 };
 
 Article.truncateTable = callback => {
@@ -108,6 +106,8 @@ Article.prototype.updateRecord = function(callback) {
     .then(callback);
 };
 
-  module.Article = Article;
+module.Article = Article;
 
 }) (app);
+
+

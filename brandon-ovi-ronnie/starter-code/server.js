@@ -8,8 +8,8 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
 const conString = 'postgres://ovidiuparasca:asdf1234@localhost:5432/articles'; // Ovi
-// const conString = 'postgres://username:password@localhost:5432/articles'; // Ronnie
-// const conString = 'postgres://username:password@localhost:5432/articles'; // Brandon
+// const conString = 'postgres://username:password@localhost:5432/'; // Ronnie
+// const conString = 'postgres://username:password@localhost:5432/banana'; // Brandon
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => {
