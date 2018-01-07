@@ -9,7 +9,14 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
+    <link rel="stylesheet" href="vendor/styles/railscasts.css">
     <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
+    <script id="article-template" type="text/x-handlebars-template">
+      <section>
+        <dt>Author name: {{name}}</dt> <dd></dd>
+        <dt>Word count: {{numWords}}</dt> <dd></dd>
+      </section>
+    </script>
   </head>
   <body>
     <header class="site-header clearfix">
@@ -35,8 +42,7 @@
         <dt>Total words:</dt> <dd class="words"></dd>
         <h2>Author Stats</h2>
         <p><em>Details on who is writing, and how much writing they are doing...</em></p>
-        <ul class="author-stats">
-        </ul>
+        <ul class="author-stats"></ul>
       </section>
     </main>
     <footer>
@@ -48,7 +54,7 @@
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
     <script>
-      Article.fetchAll();
+      app.Article.fetchAll(app.articleView.initAdminPage);
     </script>
   </body>
 </html>
