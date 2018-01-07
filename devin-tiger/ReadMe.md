@@ -18,7 +18,7 @@ Postgres, Express, FS, JSON, AJAX, HTML, CSS, JS
 
 1/4/18 4:30pm = Wrote in server.js files which includes IIFEs and functions map, filter, and reduce files.
 
-1/34/18 4:22pm = Application is up and running
+1/4/18 4:22pm = Application is up and running
 
 ## Credits and Collaborations
 
